@@ -1,0 +1,12 @@
+---
+openapi: 3.0.0
+info:
+  title: m-bitbeam-catalog
+  version: "1.0"
+paths:
+  /api/categories:
+    get:
+      summary: "Get list of categories"
+      responses:
+        200:
+          description: "OK"

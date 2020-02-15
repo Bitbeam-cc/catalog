@@ -1,0 +1,21 @@
+body {
+  font-size: 18px;
+}
+
+.sidenav {
+  min-width: 130px;
+}
+
+nav[prop=categories] a {
+  font-variant: small-caps;
+}
+
+div[prop=parts] .card {
+  width: 306px;
+  height: 320px;
+  float: left;
+}
+div[prop=parts] img {
+  width: 256px;
+  margin: auto;
+}
