@@ -10,3 +10,71 @@ paths:
       responses:
         200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    $ref: "#/components/schemas/categories"
+  /api/parts:
+    get:
+      summary: "Get list of parts"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parts:
+                    $ref: "#/components/schemas/part"
+  /api/parts/{file}:
+    parameters:
+      - name: file
+        schema:
+          type: string
+          example: "bb-a45-4x5"
+        in: path
+        required: true
+    get:
+      summary: "Get list of parts"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  parts:
+                    $ref: "#/components/schemas/part"
+  /api/update/parts:
+    put:
+      summary: "Start job, to check and update new parts release"
+      responses:
+        200:
+          description: "OK"
+components:
+  schemas:
+    categories:
+      type: array
+      items:
+        type: string
+        example: "Beam"
+    part:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Beam Ang. 4x5 45 Deg."
+        file:
+          type: string
+          example: "bb-a45-4x5"
+        categories:
+          $ref: "#/components/schemas/categories"
+      required:
+        - name
+        - file
+

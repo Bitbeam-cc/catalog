@@ -7,7 +7,7 @@ from openapi_core.shortcuts import RequestValidator, ResponseValidator
 from openapi_core import create_spec
 from extendparser import ExtendParser
 from openapi_spec_validator.schemas import read_yaml_file
-from sqlite3 import connect
+from sqlite3 import connect, OperationalError
 
 from .. import __name__ as appname
 
@@ -55,6 +55,12 @@ class Config(ExtendParser):
         self.response_validator = ResponseValidator(spec)
 
         self.db_uri = self.get_option("main", "db_uri")
+        self.db_version = 0
 
-        self.db = connect(self.db_uri, uri=True)
-        self.db.execute("SELECT * FROM parts LIMIT 1")
+        try:
+            with connect(self.db_uri, uri=True) as db:
+                cur = db.cursor()
+                cur.execute("SELECT version FROM release")
+                self.db_version = cur.fetchone()[0]
+        except OperationalError:
+            log.exception("DB Version is 0")
