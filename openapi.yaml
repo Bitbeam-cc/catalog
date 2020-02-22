@@ -30,6 +30,11 @@ paths:
                 properties:
                   parts:
                     $ref: "#/components/schemas/part"
+    put:
+      summary: "Start job, to check and update new parts release"
+      responses:
+        200:
+          description: "OK"
   /api/parts/{file}:
     parameters:
       - name: file
@@ -50,12 +55,6 @@ paths:
                 properties:
                   parts:
                     $ref: "#/components/schemas/part"
-  /api/update/parts:
-    put:
-      summary: "Start job, to check and update new parts release"
-      responses:
-        200:
-          description: "OK"
 components:
   schemas:
     categories:

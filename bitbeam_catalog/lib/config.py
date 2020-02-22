@@ -1,5 +1,5 @@
 """Configuration module."""
-from os.path import join
+from os.path import join, abspath
 
 import logging as log
 
@@ -45,7 +45,7 @@ class Config(ExtendParser):
         LOGGER.setLevel(self.log_level)
         HANDLER.setFormatter(log.Formatter(self.log_format))
 
-        self.static_files = self.get_option("main", "static_files")
+        self.static_files = abspath(self.get_option("main", "static_files"))
 
         self.validate_response = self.get_option(
             "main", "validate_response", target=bool, fallback=False
@@ -54,13 +54,18 @@ class Config(ExtendParser):
         self.request_validator = RequestValidator(spec)
         self.response_validator = ResponseValidator(spec)
 
-        self.db_uri = self.get_option("main", "db_uri")
-        self.db_version = 0
+        self.db_uri = self.get_option(
+            "main", "db_uri").format(**self.__dict__)
+        log.info(f"DB uri: {self.db_uri}")
+        self.db_version     # just check the version at start
 
+    @property
+    def db_version(self):
         try:
             with connect(self.db_uri, uri=True) as db:
                 cur = db.cursor()
                 cur.execute("SELECT version FROM release")
-                self.db_version = cur.fetchone()[0]
+                return cur.fetchone()[0]
         except OperationalError:
             log.exception("DB Version is 0")
+            return "0.0.0"

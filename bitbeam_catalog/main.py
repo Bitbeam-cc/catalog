@@ -6,5 +6,6 @@ __import__('lib.openapi', globals=globals(), level=1)
 __import__('page', globals=globals(), level=1)
 __import__('parts', globals=globals(), level=1)
 __import__('categories', globals=globals(), level=1)
+__import__('update', globals=globals(), level=1)
 
 __all__ = ["app"]
