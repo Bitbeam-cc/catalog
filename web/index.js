@@ -147,8 +147,20 @@ function on_update_parts(xhr){
     redraw_pager(data["pager"]);
 }
 
-document.addEventListener("DOMContentLoaded", function(event){
-    ajax_get("/api/categories", on_update_categories);
-    ajax_get("/api/parts", on_update_parts);
-});
 
+
+document.addEventListener("DOMContentLoaded", function(event){
+    if (window.location.hash == "#about"){
+        document.querySelector("#about").style.display="";
+    } else if (window.location.hash == "#api"){
+        let api = document.querySelector("#api");
+        api.style.display="";
+        let script = document.createElement("script");
+        script.src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"
+        api.appendChild(script);
+    } else {
+        document.querySelector("#catalog").style.display="";
+        ajax_get("/api/categories", on_update_categories);
+        ajax_get("/api/parts", on_update_parts);
+    }
+});

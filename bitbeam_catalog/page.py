@@ -15,7 +15,7 @@ def internal_server_error(req):
     traceback = format_exc()
     log.error(traceback)
     try:
-        return JSONResponse(status_code=503, traceback=traceback.split('\n'))
+        return JSONResponse(status_code=503, error="Service Unavailable")
     except Exception:
         return "503 - Service Unavailable", 503
 
