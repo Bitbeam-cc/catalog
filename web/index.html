@@ -9,7 +9,7 @@
   <body>
     <div class="container-fluid">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/"><big>m-BITBEAM Catalog</big></a>
+        <a class="navbar-brand" page="catalog" href="/#"><big>m-BITBEAM Catalog</big></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,16 +17,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/#about">About</a>
+              <a class="nav-link" page="about" href="/#about">About</a>
             </li>
 	    <li class="nav-item">
-              <a class="nav-link" href="/#api">API</a>
+              <a class="nav-link" page="api" href="/#api">API</a>
             </li>
           </ul>
         </div>
       </nav>
 
-      <div class="row" id="catalog" style="display:none;">
+      <div class="row" id="catalog_page" style="display: none;">
         <div class="col-2 sidenav">
           <h2>Categories</h2>
           <nav class="nav flex-column nav-pills" prop="categories">
@@ -38,29 +38,26 @@
 
           <nav>
             <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" aria-disabled="true" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
             </ul>
           </nav>
         </div>
       </div><!-- catalog -->
 
-      <div class="row" id="about" style="">
+      <div class="row col" id="about_page" style="display:none;">
+        <h2>About</h2>
       </div>
 
-      <div class="row" id="api" style="display:none">
+      <div class="row" id="api_page" style="display:none;">
         <redoc spec-url="openapi.yaml"></redoc>
       </div>
 
     </div><!-- / container -->
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="/index.js"></script>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>

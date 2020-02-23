@@ -1,6 +1,5 @@
-var categories = document.querySelector("nav[prop=categories]");
-var parts = document.querySelector("div[prop=parts]");
-var pagination = document.querySelector("ul.pagination");
+var active = null;      // active page
+
 var category = null;
 
 function ajax_get(url, callback){
@@ -16,16 +15,28 @@ function ajax_get(url, callback){
     xhr.send();
 }
 
+function parse_url(){
+    let params = {};
+    document.location.hash.substring(1).split("&").forEach(function(it){
+        let keyval = it.split("=");
+        params[keyval[0]]=keyval[1];
+    });
+    return params;
+}
+
 function on_update_categories(xhr){
     if (xhr.status != 200){
         return;
     }
 
+    let categories = document.querySelector("nav[prop=categories]");
     categories.innerHTML = '';  // drop all children
 
     let elm = document.createElement("a");
     elm.classList.add("nav-link");
-    elm.classList.add("active");
+    if (category == null){
+        elm.classList.add("active");
+    }
 
     elm.setAttribute("href", "#");
     elm.innerText = "All";
@@ -38,10 +49,14 @@ function on_update_categories(xhr){
     categories.appendChild(elm);
 
     let data = JSON.parse(xhr.responseText);
-    data["categories"].forEach(function(it, index){
+    data["categories"].forEach(function(it){
         elm = document.createElement("a");
         elm.setAttribute("class", "nav-link");
-        elm.setAttribute("href", "#");
+        if (category == it){
+            elm.classList.add("active");
+        }
+
+        elm.setAttribute("href", "#catergory="+it);
         elm.innerText = it;
         elm.addEventListener("click", function(ev){
             category = it;
@@ -54,7 +69,19 @@ function on_update_categories(xhr){
     });
 }
 
+function pager_url(offset){
+    let params = {};
+    if (category != null) {
+        params.category = category;
+    }
+    if (offset != 0) {
+        params.offset = offset;
+    }
+    return $.param(params);
+}
+
 function redraw_pager(pager){
+    let pagination = document.querySelector("ul.pagination");
     pagination.innerHTML = '';
 
     // Previous
@@ -62,17 +89,14 @@ function redraw_pager(pager){
     li.classList.add("page-item");
     let a = document.createElement("a");
     a.classList.add("page-link");
-    a.setAttribute("href", "#");
+    a.setAttribute("href", "#"+pager_url(pager.offset-pager.limit));
     a.innerText = "Previous";
 
     if (pager.page == 0){
         li.classList.add("disabled");
     } else {
         a.addEventListener("click", function(){
-            let url = "/api/parts?offset="+(pager.offset-pager.limit);
-            if (category != null) {
-                url += "&category="+category;
-            }
+            let url = "/api/parts?"+pager_url(pager.offset-pager.limit);
             ajax_get(url, on_update_parts);
         });
     }
@@ -87,17 +111,14 @@ function redraw_pager(pager){
     li.classList.add("page-item");
     a = document.createElement("a");
     a.classList.add("page-link");
-    a.setAttribute("href", "#");
+    a.setAttribute("href", "#"+pager_url(pager.offset+pager.limit));
     a.innerText = "Next";
 
     if (pager.page == pager.pages){
         li.classList.add("disabled");
     } else {
         a.addEventListener("click", function(){
-            let url = "/api/parts?offset="+(pager.offset+pager.limit);
-            if (category != null) {
-                url += "&category="+category;
-            }
+            let url = "/api/parts?"+pager_url(pager.offset+pager.limit);
             ajax_get(url, on_update_parts);
         });
     }
@@ -111,11 +132,11 @@ function on_update_parts(xhr){
         return;
     }
 
+    let parts = document.querySelector("div[prop=parts]");
     parts.innerHTML = '';  // drop all children
 
     let data = JSON.parse(xhr.responseText);
     data["parts"].forEach(function(it, index){
-            console.log(index + " is " + it);
             let card = document.createElement("div");
             card.setAttribute("class", "card");
 
@@ -148,19 +169,54 @@ function on_update_parts(xhr){
 }
 
 
+function switch_catalog(){
+    if (active != null) {
+        active.hide();
+    }
+
+    let params = parse_url();
+    if (params.category != undefined) {
+        category = params.category;
+    }
+
+    active = $("#catalog_page");
+    active.show();
+    ajax_get("/api/categories", on_update_categories);
+    ajax_get("/api/parts?"+pager_url(params.offset | 0), on_update_parts);
+}
+
+function switch_about(){
+    if (active != null) {
+        active.hide();
+    }
+
+    active = $("#about_page");
+    active.show();
+}
+
+function switch_api(){
+    if (active != null) {
+        active.hide();
+    }
+
+    active = $("#api_page");
+    active.show();
+
+    if ($("redoc").children().length == 0) {
+        $.getScript("https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js");
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function(event){
+    $("a[page=catalog]").click(switch_catalog);
+    $("a[page=about]").click(switch_about);
+    $("a[page=api]").click(switch_api);
+
     if (window.location.hash == "#about"){
-        document.querySelector("#about").style.display="";
+        switch_about();
     } else if (window.location.hash == "#api"){
-        let api = document.querySelector("#api");
-        api.style.display="";
-        let script = document.createElement("script");
-        script.src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"
-        api.appendChild(script);
+        switch_api();
     } else {
-        document.querySelector("#catalog").style.display="";
-        ajax_get("/api/categories", on_update_categories);
-        ajax_get("/api/parts", on_update_parts);
+        switch_catalog();
     }
 });

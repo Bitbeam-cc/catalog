@@ -9,5 +9,5 @@ from . models.categories import Category
 def categories(req):
     """List of categories"""
     return JSONResponse(
-        categories=Category.list()
+        categories=list(Category.list())
     )

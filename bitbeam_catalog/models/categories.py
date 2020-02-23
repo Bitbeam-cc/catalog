@@ -12,4 +12,5 @@ class Category:
                 """SELECT category FROM categories
                     WHERE category != 'Support' ORDER BY category
                 """)
-            return cur.fetchall()
+            for row in cur:
+                yield row[0]
