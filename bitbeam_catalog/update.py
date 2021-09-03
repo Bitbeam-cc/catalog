@@ -17,7 +17,7 @@ import uwsgi
 
 from . lib.core import app
 
-URL = "https://api.github.com/repos/ondratu/m-bitbeam/releases/latest"
+URL = "https://api.github.com/repos/m-Bitbeam/m-bitbeam/releases/latest"
 log = logging.getLogger(__name__)
 
 
@@ -72,7 +72,7 @@ def check_update(num):
                 else:
                     log.debug(f"skip {name}")
 
-            log.info(f"Creating symlinks")
+            log.info("Creating symlinks")
             data_path = app.cfg.static_files+"/data"
             for it in ("stl", "png", "catalog.db"):
                 if lexists(f"{data_path}/{it}"):

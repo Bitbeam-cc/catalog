@@ -1,4 +1,4 @@
 extendparser
-openapi-core
+openapi-core==0.13.8
 PoorWSGI
 uWSGI

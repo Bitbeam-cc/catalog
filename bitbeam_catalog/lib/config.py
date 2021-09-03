@@ -16,6 +16,7 @@ log.root.addHandler(HANDLER)
 log.getLogger("poorwsgi").setLevel("WARNING")
 log.getLogger("openapi_spec_validator.validators").setLevel("WARNING")
 log.getLogger("openapi_spec_validator.decorators").setLevel("WARNING")
+log.getLogger("parse").setLevel("INFO")
 
 LOGGER = log.getLogger(appname)
 
