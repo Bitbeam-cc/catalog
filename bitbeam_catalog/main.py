@@ -1,5 +1,5 @@
 """Init file for module use in uwsgi."""
-from . lib.core import app
+from .lib.core import app
 
 # another way how to call: from . main import *, but pep8 OK
 __import__('lib.openapi', globals=globals(), level=1)

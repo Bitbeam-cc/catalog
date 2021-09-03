@@ -35,8 +35,8 @@ class Pager():
 
     def to_json(self):
         return {
-          "offset": self.offset,
-          "limit": self.limit,
-          "pages": self.pages,
-          "page": self.page
+            "offset": self.offset,
+            "limit": self.limit,
+            "pages": self.pages,
+            "page": self.page
         }

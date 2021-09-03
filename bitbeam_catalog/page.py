@@ -4,8 +4,8 @@ from traceback import format_exc
 from poorwsgi import state
 from poorwsgi.response import FileResponse, JSONResponse
 
-from . lib.config import LOGGER as log
-from . lib.core import app
+from .lib.config import LOGGER as log
+from .lib.core import app
 
 
 @app.http_state(state.HTTP_INTERNAL_SERVER_ERROR)

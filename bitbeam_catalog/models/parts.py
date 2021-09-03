@@ -1,11 +1,10 @@
-from sqlite3 import connect, Row
+from sqlite3 import Row, connect
 
-from .. lib.core import app
-from .. lib.config import LOGGER as log
+from ..lib.config import LOGGER as log
+from ..lib.core import app
 
 
 class Part(dict):
-
     @staticmethod
     def list(pager, category=None):
         cond = "WHERE p.file like 'bb-%'"
@@ -24,7 +23,7 @@ class Part(dict):
                     LEFT JOIN parts_categories pc ON (p.file = pc.part)
                     {cond} GROUP BY p.file ORDER BY p.file
                     LIMIT ?,?
-                """, args+[pager.offset, pager.limit])
+                """, args + [pager.offset, pager.limit])
             for row in cur:
                 row = Row(cur, row)
                 items.append(Part(**row))

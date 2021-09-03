@@ -1,13 +1,12 @@
 """Configuration module."""
-from os.path import join, abspath
-
 import logging as log
+from os.path import abspath, join
+from sqlite3 import OperationalError, connect
 
-from openapi_core.shortcuts import RequestValidator, ResponseValidator
-from openapi_core import create_spec
 from extendparser import ExtendParser
+from openapi_core import create_spec
+from openapi_core.shortcuts import RequestValidator, ResponseValidator
 from openapi_spec_validator.schemas import read_yaml_file
-from sqlite3 import connect, OperationalError
 
 from .. import __name__ as appname
 
@@ -20,26 +19,25 @@ log.getLogger("parse").setLevel("INFO")
 
 LOGGER = log.getLogger(appname)
 
-LOG_FORMAT = (
-    "%(asctime)s %(levelname)s: %(name)s: %(message)s "
-    "{%(filename)s.%(funcName)s():%(lineno)d}"
-)
+LOG_FORMAT = ("%(asctime)s %(levelname)s: %(name)s: %(message)s "
+              "{%(filename)s.%(funcName)s():%(lineno)d}")
 
 OPEN_API = "openapi.yaml"
 
 
 class Config(ExtendParser):
     """Configuration class."""
-
     def __init__(self, config_file):
         super(Config, self).__init__()
 
         with open(config_file, "r") as src:
             self.read_file(src)
 
-        self.log_level = self.get_option("logging", "level",
+        self.log_level = self.get_option("logging",
+                                         "level",
                                          fallback="WARNING")
-        self.log_format = self.get_option("logging", "format",
+        self.log_format = self.get_option("logging",
+                                          "format",
                                           fallback=LOG_FORMAT)
 
         log.root.setLevel(self.log_level)  # final output
@@ -48,17 +46,17 @@ class Config(ExtendParser):
 
         self.static_files = abspath(self.get_option("main", "static_files"))
 
-        self.validate_response = self.get_option(
-            "main", "validate_response", target=bool, fallback=False
-        )
+        self.validate_response = self.get_option("main",
+                                                 "validate_response",
+                                                 target=bool,
+                                                 fallback=False)
         spec = create_spec(read_yaml_file(join(self.static_files, OPEN_API)))
         self.request_validator = RequestValidator(spec)
         self.response_validator = ResponseValidator(spec)
 
-        self.db_uri = self.get_option(
-            "main", "db_uri").format(**self.__dict__)
+        self.db_uri = self.get_option("main", "db_uri").format(**self.__dict__)
         log.info(f"DB uri: {self.db_uri}")
-        self.db_version     # just check the version at start
+        self.db_version  # just check the version at start
 
     @property
     def db_version(self):
