@@ -12,7 +12,7 @@ from openapi_core.templating.paths.exceptions import (OperationNotFound,
                                                       PathNotFound)
 from openapi_core.validation.exceptions import InvalidSecurity
 from poorwsgi.openapi_wrapper import OpenAPIRequest, OpenAPIResponse
-from poorwsgi.response import Response, abort
+from poorwsgi.response import abort, JsonResponse
 
 from .config import LOGGER as log
 from .core import app
@@ -53,15 +53,15 @@ def before_request(req):
                 return  # not found
             if isinstance(error, InvalidSecurity):
                 abort(
-                    Response(dumps({"errors": errors}),
-                             status_code=401,
-                             content_type="application/json"))
+                    JsonResponse(errors=errors,
+                                 status_code=401,
+                                 charset=None))
 
             errors.append(error_to_struct(error))
         abort(
-            Response(dumps({"errors": errors}),
-                     status_code=400,
-                     content_type="application/json"))
+            JsonResponse(errors=errors,
+                         status_code=400,
+                         charset=None))
 
 
 def after_request(req, res):

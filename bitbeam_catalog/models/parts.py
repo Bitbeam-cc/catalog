@@ -1,3 +1,4 @@
+"""Model definition for parts and parts_categories."""
 from sqlite3 import Row, connect
 
 from ..lib.config import LOGGER as log
@@ -5,9 +6,12 @@ from ..lib.core import app
 
 
 class Part(dict):
+    """Parts model definition."""
+
     @staticmethod
     def list(pager, category=None):
-        cond = "WHERE p.file like 'bb-%'"
+        """Return listo fo parts."""
+        cond = "WHERE p.to_print = 1"
         if category is not None:
             cond += " AND pc.category=?"
             args = [category]
@@ -34,5 +38,4 @@ class Part(dict):
                     {cond}
                 """, args)
             pager.total = cur.fetchone()[0]
-            print(pager.total)
         return items

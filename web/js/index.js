@@ -47,13 +47,18 @@ function on_update_categories(xhr){
     data["categories"].forEach(function(it){
         elm = document.createElement("a");
         elm.setAttribute("class", "nav-link");
-        if (category == it){
+        if (category == it.name){
             elm.classList.add("active");
         }
 
-        elm.setAttribute("href", "#category="+it);
-        elm.setAttribute("category", it);
-        elm.innerText = it;
+        elm.setAttribute("href", "#category="+it.name);
+        elm.setAttribute("category", it.name);
+        elm.innerText = it.name;
+        qu = document.createElement("span");
+        qu.setAttribute("class", "float-right");
+        qu.innerText = it.quantity.toString();
+        elm.appendChild(qu);
+
         categories.appendChild(elm);
     });
 }

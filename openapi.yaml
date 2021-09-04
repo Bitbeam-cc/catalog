@@ -60,8 +60,14 @@ components:
     categories:
       type: array
       items:
-        type: string
-        example: "Beam"
+        type: object
+        properties:
+          name:
+            type: string
+            example: "Beam"
+          quantity:
+            type: integer
+            example: 5
     part:
       type: object
       properties:

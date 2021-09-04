@@ -24,11 +24,12 @@ LOG_FORMAT = ("%(asctime)s %(levelname)s: %(name)s: %(message)s "
 
 OPEN_API = "openapi.yaml"
 
+# pylint: disable=too-many-ancestors
 
 class Config(ExtendParser):
     """Configuration class."""
     def __init__(self, config_file):
-        super(Config, self).__init__()
+        super().__init__()
 
         with open(config_file, "r") as src:
             self.read_file(src)
@@ -60,6 +61,7 @@ class Config(ExtendParser):
 
     @property
     def db_version(self):
+        """Return DB version read from DB file."""
         try:
             with connect(self.db_uri, uri=True) as db:
                 cur = db.cursor()
