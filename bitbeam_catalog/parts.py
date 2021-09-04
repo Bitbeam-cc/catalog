@@ -19,6 +19,8 @@ def parts(req):
 
 
 @app.route('/api/parts/<part>')
-def part(req, part):
+def part_detail(req, part):
     """Part detail."""
-    return JSONResponse(part={})
+    assert req
+    assert part
+    return JSONResponse(part=Part)

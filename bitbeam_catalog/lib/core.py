@@ -1,3 +1,4 @@
+"""Core application instance."""
 import os
 
 from poorwsgi import Application

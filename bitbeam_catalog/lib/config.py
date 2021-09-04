@@ -26,12 +26,13 @@ OPEN_API = "openapi.yaml"
 
 # pylint: disable=too-many-ancestors
 
+
 class Config(ExtendParser):
     """Configuration class."""
     def __init__(self, config_file):
         super().__init__()
 
-        with open(config_file, "r") as src:
+        with open(config_file, "r", encoding="utf-8") as src:
             self.read_file(src)
 
         self.log_level = self.get_option("logging",
@@ -56,15 +57,14 @@ class Config(ExtendParser):
         self.response_validator = ResponseValidator(spec)
 
         self.db_uri = self.get_option("main", "db_uri").format(**self.__dict__)
-        log.info(f"DB uri: {self.db_uri}")
-        self.db_version  # just check the version at start
+        log.info("DB uri: %s has %s", self.db_uri, self.db_version)
 
     @property
     def db_version(self):
         """Return DB version read from DB file."""
         try:
-            with connect(self.db_uri, uri=True) as db:
-                cur = db.cursor()
+            with connect(self.db_uri, uri=True) as dbfile:
+                cur = dbfile.cursor()
                 cur.execute("SELECT version FROM release")
                 return cur.fetchone()[0]
         except OperationalError:
