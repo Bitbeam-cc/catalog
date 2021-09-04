@@ -29,7 +29,11 @@ paths:
                 type: object
                 properties:
                   parts:
-                    $ref: "#/components/schemas/part"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/part"
+                  pager:
+                    $ref: "#/components/schemas/pager"
     put:
       summary: "Start job, to check and update new parts release"
       responses:
@@ -57,6 +61,19 @@ paths:
                     $ref: "#/components/schemas/part"
 components:
   schemas:
+    pager:
+      type: object
+      properties:
+        offset:
+          type: integer
+        limit:
+          type: integer
+        pages:
+          type: integer
+          description: "Pages count"
+        page:
+          type: integer
+          description: "Actual page"
     categories:
       type: array
       items:

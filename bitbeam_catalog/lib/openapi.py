@@ -1,6 +1,4 @@
 """OpenAPI checking before and after requests."""
-from json import dumps
-
 from openapi_core.deserializing.parameters.exceptions import \
     EmptyParameterValue
 from openapi_core.schema.media_types.exceptions import InvalidContentType
@@ -12,7 +10,7 @@ from openapi_core.templating.paths.exceptions import (OperationNotFound,
                                                       PathNotFound)
 from openapi_core.validation.exceptions import InvalidSecurity
 from poorwsgi.openapi_wrapper import OpenAPIRequest, OpenAPIResponse
-from poorwsgi.response import abort, JsonResponse
+from poorwsgi.response import JSONResponse, abort
 
 from .config import LOGGER as log
 from .core import app
@@ -24,7 +22,7 @@ ERRORS = {
     EmptyParameterValue: "EMPTY_PARAMETER",
 }
 
-IGNORE_EXTENSIONS = (".yaml", ".png", ".js", ".css")
+IGNORE_EXTENSIONS = (".yaml", ".png", ".js", ".css", ".map", ".stl", ".dat")
 
 
 def error_to_struct(error):
@@ -52,16 +50,10 @@ def before_request(req):
                                   InvalidPath, PathNotFound)):
                 return  # not found
             if isinstance(error, InvalidSecurity):
-                abort(
-                    JsonResponse(errors=errors,
-                                 status_code=401,
-                                 charset=None))
+                abort(JSONResponse(errors=errors, status_code=401))
 
             errors.append(error_to_struct(error))
-        abort(
-            JsonResponse(errors=errors,
-                         status_code=400,
-                         charset=None))
+        abort(JSONResponse(errors=errors, status_code=400))
 
 
 def after_request(req, res):
