@@ -39,13 +39,8 @@ function on_update_categories(xhr){
     }
 
     elm.setAttribute("href", "#");
+    elm.setAttribute("category", "All");
     elm.innerText = "All";
-    elm.addEventListener("click", function(ev){
-        category = null;
-        document.querySelector("[prop=categories] .active").classList.remove("active");
-        ev.target.classList.add("active");
-        ajax_get("/api/parts", on_update_parts);
-    });
     categories.appendChild(elm);
 
     let data = JSON.parse(xhr.responseText);
@@ -56,15 +51,9 @@ function on_update_categories(xhr){
             elm.classList.add("active");
         }
 
-        elm.setAttribute("href", "#catergory="+it);
+        elm.setAttribute("href", "#category="+it);
+        elm.setAttribute("category", it);
         elm.innerText = it;
-        elm.addEventListener("click", function(ev){
-            category = it;
-            document.querySelector("[prop=categories] .active").classList.remove("active");
-            ev.target.classList.add("active");
-            ajax_get("/api/parts?category="+it, on_update_parts);
-        });
-
         categories.appendChild(elm);
     });
 }
@@ -94,11 +83,6 @@ function redraw_pager(pager){
 
     if (pager.page == 0){
         li.classList.add("disabled");
-    } else {
-        a.addEventListener("click", function(){
-            let url = "/api/parts?"+pager_url(pager.offset-pager.limit);
-            ajax_get(url, on_update_parts);
-        });
     }
 
     li.appendChild(a)
@@ -116,11 +100,6 @@ function redraw_pager(pager){
 
     if (pager.page == pager.pages){
         li.classList.add("disabled");
-    } else {
-        a.addEventListener("click", function(){
-            let url = "/api/parts?"+pager_url(pager.offset+pager.limit);
-            ajax_get(url, on_update_parts);
-        });
     }
 
     li.appendChild(a)
@@ -170,19 +149,31 @@ function on_update_parts(xhr){
 
 
 function switch_catalog(){
-    if (active != null) {
-        active.hide();
-    }
-
     let params = parse_url();
     if (params.category != undefined) {
         category = params.category;
+        if (category == 'All'){
+            category = null;
+        }
+    } else {
+        category = null;
     }
 
-    active = $("#catalog_page");
-    active.show();
-    ajax_get("/api/categories", on_update_categories);
-    ajax_get("/api/parts?"+pager_url(params.offset | 0), on_update_parts);
+    if (active == null || active[0].id != 'catalog_page') {
+        if (active != null) {
+            active.hide();
+        }
+        active = $("#catalog_page");
+        active.show();
+        ajax_get("/api/categories", on_update_categories);
+        ajax_get("/api/parts?"+pager_url(params.offset | 0), on_update_parts);
+    } else {
+        document.querySelector("[prop=categories] .active")
+            .classList.remove("active");
+        ajax_get("/api/parts?"+pager_url(params.offset | 0), on_update_parts);
+        document.querySelector("a[category="+(category || "All")+"]")
+            .classList.add("active");
+    }
 }
 
 function switch_about(){
@@ -207,11 +198,7 @@ function switch_api(){
     }
 }
 
-document.addEventListener("DOMContentLoaded", function(event){
-    $("a[page=catalog]").click(switch_catalog);
-    $("a[page=about]").click(switch_about);
-    $("a[page=api]").click(switch_api);
-
+function parse_hash(){
     if (window.location.hash == "#about"){
         switch_about();
     } else if (window.location.hash == "#api"){
@@ -219,4 +206,16 @@ document.addEventListener("DOMContentLoaded", function(event){
     } else {
         switch_catalog();
     }
+}
+
+document.addEventListener("DOMContentLoaded", function(event){
+    $("a[page=catalog]").click(switch_catalog);
+    $("a[page=about]").click(switch_about);
+    $("a[page=api]").click(switch_api);
+
+    parse_hash();
 });
+
+window.addEventListener('hashchange', function() {
+    parse_hash();
+}, false);

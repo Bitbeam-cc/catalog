@@ -41,7 +41,7 @@ def download(tag, name, url):
     return
 
 
-@timer(10)
+@timer(60)
 def check_update(num):
     state = (uwsgi.queue_get(0) or b"\0")[0]
     if not state & (1 << 0):
