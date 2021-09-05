@@ -56,7 +56,7 @@ def availability(req):
 def documentation(req):
     """Static redoc html documentation."""
     assert req
-    return FileResponse(app.cfg.static_files + "/redoc.html")
+    return FileResponse(app.cfg.static_files + "/web/redoc.html")
 
 
 @app.route('/openapi.yaml')

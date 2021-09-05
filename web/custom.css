@@ -1,5 +1,6 @@
 body {
   font-size: 18px;
+  padding-top: 80px;
 }
 
 .sidenav {
@@ -8,6 +9,7 @@ body {
 
 nav[prop=categories] a {
   font-variant: small-caps;
+  min-width: 7em;
 }
 
 div[prop=parts] .card {
