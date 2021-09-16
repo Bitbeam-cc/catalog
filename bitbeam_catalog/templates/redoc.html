@@ -1,0 +1,10 @@
+{# vim:set softtabstop=2: -#}
+{% set page = "api"%}
+{% include("_header.html") %}
+    <div class="container">
+      <redoc spec-url="openapi.yaml"></redoc>
+      <script src="https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js"> </script>
+    </div><!-- / container -->
+
+  </body>
+</html>

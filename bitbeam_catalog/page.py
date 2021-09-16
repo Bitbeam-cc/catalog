@@ -2,10 +2,11 @@
 from traceback import format_exc
 
 from poorwsgi import state
-from poorwsgi.response import FileResponse, JSONResponse
+from poorwsgi.response import FileResponse, JSONResponse, Response
 
 from .lib.config import LOGGER as log
 from .lib.core import app
+from .lib.view import generate_page
 
 
 @app.http_state(state.HTTP_INTERNAL_SERVER_ERROR)
@@ -42,7 +43,7 @@ def fatal_error(req):
 def root(req):
     """Static root html file."""
     assert req
-    return FileResponse(app.cfg.static_files + "/web/index.html")
+    return Response(generate_page("index.html"))
 
 
 @app.route('/api', state.METHOD_HEAD)
@@ -56,7 +57,7 @@ def availability(req):
 def documentation(req):
     """Static redoc html documentation."""
     assert req
-    return FileResponse(app.cfg.static_files + "/web/redoc.html")
+    return Response(generate_page("redoc.html"))
 
 
 @app.route('/openapi.yaml')

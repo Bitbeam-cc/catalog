@@ -22,6 +22,7 @@ ERRORS = {
     EmptyParameterValue: "EMPTY_PARAMETER",
 }
 
+IGNORE_PATHS = ('/', '/api')
 IGNORE_EXTENSIONS = (".yaml", ".png", ".js", ".css", ".map", ".stl", ".dat")
 
 
@@ -36,7 +37,7 @@ def error_to_struct(error):
 
 def before_request(req):
     """Check every input requests except / and openapi.yaml."""
-    if req.uri in ('/') or req.uri.endswith(IGNORE_EXTENSIONS):
+    if req.uri in IGNORE_PATHS or req.uri.endswith(IGNORE_EXTENSIONS):
         return  # do not check doc and definition url
     req.api = OpenAPIRequest(req)
     if req.content_length > app.data_size:
@@ -58,7 +59,7 @@ def before_request(req):
 
 def after_request(req, res):
     """Check every answer except of / and openapi.yaml."""
-    if req.uri in ('/') or req.uri.endswith(IGNORE_EXTENSIONS):
+    if req.uri in IGNORE_PATHS or req.uri.endswith(IGNORE_EXTENSIONS):
         return res  # do not check doc and definition url
     result = app.cfg.response_validator.validate(
         req.api or OpenAPIRequest(req),  # on error in any before_request
