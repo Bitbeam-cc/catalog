@@ -10,7 +10,7 @@
     <link href="/custom.css" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container">
 
         <a class="navbar-brand" page="catalog" href="/#"><big>m-BITBEAM</big></a>
@@ -21,13 +21,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" page="about" href="/#catalog">Catalog</a>
+              <a class="nav-link" page="catalog" href="/#catalog">Catalog</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" page="about" href="/#about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="">Download</a>
+              <a class="nav-link" page="download" href="/#download">Download</a>
             </li>
             <li class="nav-item">
               <a class="nav-link {{ 'active' if page == 'api' else '' }}" page="api" href="/api">API</a>

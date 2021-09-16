@@ -167,9 +167,11 @@ function switch_catalog(){
     if (active == null || active[0].id != 'catalog_page') {
         if (active != null) {
             active.hide();
+            document.querySelector("a[page].active").classList.remove("active");
         }
         active = $("#catalog_page");
         active.show();
+        document.querySelector("a[page=catalog].nav-link").classList.add("active");
         ajax_get("/api/categories", on_update_categories);
         ajax_get("/api/parts?"+pager_url(params.offset | 0), on_update_parts);
     } else {
@@ -184,30 +186,30 @@ function switch_catalog(){
 function switch_about(){
     if (active != null) {
         active.hide();
+        document.querySelector("a[page].active").classList.remove("active");
     }
 
     active = $("#about_page");
     active.show();
+    document.querySelector("a[page=about]").classList.add("active");
 }
 
-function switch_api(){
+function switch_download(){
     if (active != null) {
         active.hide();
+        document.querySelector("a[page].active").classList.remove("active");
     }
 
-    active = $("#api_page");
+    active = $("#download_page");
     active.show();
-
-    if ($("redoc").children().length == 0) {
-        $.getScript("https://cdn.jsdelivr.net/npm/redoc/bundles/redoc.standalone.js");
-    }
+    document.querySelector("a[page=download]").classList.add("active");
 }
 
 function parse_hash(){
     if (window.location.hash == "#about"){
         switch_about();
-    } else if (window.location.hash == "#api"){
-        switch_api();
+    } else if (window.location.hash == "#download"){
+        switch_download();
     } else {
         switch_catalog();
     }
@@ -216,7 +218,7 @@ function parse_hash(){
 document.addEventListener("DOMContentLoaded", function(event){
     $("a[page=catalog]").click(switch_catalog);
     $("a[page=about]").click(switch_about);
-    $("a[page=api]").click(switch_api);
+    $("a[page=download]").click(switch_download);
 
     parse_hash();
 });

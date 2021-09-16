@@ -1,6 +1,21 @@
+html, body {
+  height: 100%;
+}
 body {
   font-size: 18px;
   padding-top: 80px;
+}
+
+.wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+
+.footer {
+  height: 60px;
 }
 
 .sidenav {
