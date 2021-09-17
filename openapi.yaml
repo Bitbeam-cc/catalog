@@ -48,17 +48,14 @@ paths:
         in: path
         required: true
     get:
-      summary: "Get list of parts"
+      summary: "Get a part detail"
       responses:
         200:
           description: "OK"
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  parts:
-                    $ref: "#/components/schemas/part"
+                $ref: "#/components/schemas/part"
 components:
   schemas:
     pager:

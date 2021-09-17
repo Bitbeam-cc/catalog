@@ -7,10 +7,9 @@ from ..lib.core import app
 
 class Part(dict):
     """Parts model definition."""
-
     @staticmethod
     def list(pager, category=None):
-        """Return listo fo parts."""
+        """Return list of parts."""
         cond = "WHERE p.to_print = 1"
         if category is not None:
             cond += " AND pc.category=?"
@@ -39,3 +38,27 @@ class Part(dict):
                 """, args)
             pager.total = cur.fetchone()[0]
         return items
+
+    @staticmethod
+    def get(file):
+        """Get part detail."""
+
+        with connect(app.cfg.db_uri) as con:
+            con.set_trace_callback(log.info)
+            cur = con.cursor()
+            cur.execute(
+                """SELECT p.name, p.file FROM parts p
+                    WHERE file = ? GROUP BY p.file ORDER BY p.file
+                """, (file, ))
+            part = Part(**Row(cur, cur.fetchone()))
+
+            cur.execute(
+                """SELECT category FROM parts_categories
+                    WHERE part = ?
+                """, (file, ))
+            part["categories"] = []
+            for row in cur:
+                row = Row(cur, row)
+                part["categories"].append(Part(**row))
+
+            return part

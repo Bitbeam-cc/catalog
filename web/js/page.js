@@ -6,6 +6,7 @@ Page = function(){
     this.link_download = document.querySelector("a[page=download]");
 
     this.catalog = new Catalog();
+    this.part = new Part();
 
     document.addEventListener("DOMContentLoaded", this.on_loaded.bind(this));
     window.addEventListener('hashchange', function() {
@@ -41,6 +42,18 @@ Page.prototype.switch_catalog = function() {
     }
 }
 
+Page.prototype.switch_part = function() {
+    if (this.active && this.active.id == "part_page"){
+        return;
+    }
+
+    this.hide();
+    this.show("#part_page");
+    this.link_catalog.classList.add('active');
+    this.part.load();
+}
+
+
 Page.prototype.switch_about = function() {
     if (this.active && this.active.id == "about_page"){
         return;
@@ -62,12 +75,13 @@ Page.prototype.switch_download = function() {
 }
 
 Page.prototype.parse_hash = function() {
-    if (window.location.hash == "#about"){
+    let page_url = document.location.hash.split('=')[0];
+    if (page_url == "#about"){
         this.switch_about();
-    } else if (window.location.hash == "#download"){
+    } else if (page_url == "#download"){
         this.switch_download();
-    } else if (window.location.hash == "#piece"){
-        this.switch_piece();
+    } else if (page_url == "#part"){
+        this.switch_part();
     } else {
         this.switch_catalog();
     }

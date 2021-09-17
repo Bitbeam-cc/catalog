@@ -49,8 +49,7 @@ def check_update(num):
     When flag is set, and no other update process is not run, download
     release info. When release is updated on github, download and use it.
     """
-    # pylint: disable=too-many-branches
-    assert num
+    # pylint: disable=too-many-branches,unused-argument
     state_byte = (uwsgi.queue_get(0) or b"\0")[0]
     if not state_byte & (1 << 0):
         return  # update bit not set

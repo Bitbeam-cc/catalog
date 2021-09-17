@@ -42,7 +42,7 @@ Catalog.prototype.init = function() {
 
     ajax_get("/api/categories", this.on_update_categories.bind(this));
     ajax_get("/api/parts?"+this.pager_url(params.offset | 0),
-       this.on_update_parts.bind(this));
+       this.on_load_part.bind(this));
 }
 
 Catalog.prototype.update = function() {
@@ -51,7 +51,7 @@ Catalog.prototype.update = function() {
     document.querySelector("a[category].active")
         .classList.remove("active");
     ajax_get("/api/parts?"+this.pager_url(params.offset | 0),
-        this.on_update_parts.bind(this));
+        this.on_load_parts.bind(this));
     document.querySelector("a[category="+(this.category || "All")+"]")
             .classList.add("active");
 }
@@ -130,7 +130,7 @@ Catalog.prototype.on_update_categories = function(xhr) {
     }.bind(this));
 }
 
-Catalog.prototype.on_update_parts = function(xhr) {
+Catalog.prototype.on_load_parts = function(xhr) {
     if (xhr.status != 200){
         return;
     }
@@ -139,30 +139,34 @@ Catalog.prototype.on_update_parts = function(xhr) {
 
     let data = JSON.parse(xhr.responseText);
     data["parts"].forEach(function(it, index){
+            let href = '#part='+it["file"];
+
             let card = document.createElement("div");
             card.setAttribute("class", "card");
+
+            let imglink = document.createElement("a");
+            imglink.setAttribute("class", "card-link");
+            imglink.setAttribute("href", href);
+            card.appendChild(imglink);
 
             let img = document.createElement("img");
             img.setAttribute("class", "card-img-top");
             img.setAttribute("src", "/png/"+it["file"]+".png");
-            card.appendChild(img)
+            imglink.appendChild(img)
 
             let body = document.createElement("div");
             body.setAttribute("class", "card-body");
             card.appendChild(body)
 
+            let link = document.createElement("a");
+            link.setAttribute("class", "card-link");
+            link.setAttribute("href", href);
+            body.appendChild(link);
+
             let title = document.createElement("h5");
             title.setAttribute("class", "card-title");
             title.innerText = it["name"];
-            body.appendChild(title);
-
-            /*
-            let file = document.createElement("a");
-            file.setAttribute("class", "card-link");
-            file.setAttribute("href", it["file"]+".stl");
-            file.innerText = it["file"];
-            body.appendChild(file);
-            */
+            link.appendChild(title);
 
             this.parts.appendChild(card);
     }.bind(this));

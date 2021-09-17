@@ -8,7 +8,7 @@ from .models.parts import Part
 
 @app.route('/api/parts')
 def parts(req):
-    """List of printers."""
+    """List of print files - kit parts."""
     category = req.args.getfirst("category")
     pager = Pager(limit=12)
     pager.bind(req.args)
@@ -18,9 +18,8 @@ def parts(req):
     # TODO: JSONGenerator... muhehe
 
 
-@app.route('/api/parts/<part>')
-def part_detail(req, part):
+@app.route('/api/parts/<file>')
+def part_detail(req, file_):
     """Part detail."""
     assert req
-    assert part
-    return JSONResponse(part=Part)
+    return JSONResponse(**Part.get(file_))
