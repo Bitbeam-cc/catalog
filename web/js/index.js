@@ -2,6 +2,7 @@ function ajax_get(url, callback){
     let xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Accept", "application/json");
     xhr.onreadystatechange = function(){
         if (xhr.readyState != 4){
             return;

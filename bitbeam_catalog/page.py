@@ -29,8 +29,10 @@ def forbidden(req):
 @app.http_state(404)
 def page_not_found(req):
     """404 Not Found handler."""
-    assert req
-    return JSONResponse(status_code=404, error="Entity of Endpoint not found")
+    if req.accept_json:
+        return JSONResponse(status_code=404,
+                            error="Entity of Endpoint not found")
+    return Response(generate_page("not-found.html"))
 
 
 @app.route('/__fatal__', state.METHOD_DELETE)
