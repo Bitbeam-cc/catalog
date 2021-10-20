@@ -6,6 +6,7 @@ from openapi_core.schema.operations.exceptions import InvalidOperation
 from openapi_core.schema.parameters.exceptions import (
     MissingParameter, MissingRequiredParameter, OpenAPIParameterError)
 from openapi_core.schema.paths.exceptions import InvalidPath
+from openapi_core.schema.responses.exceptions import MissingResponseContent
 from openapi_core.templating.paths.exceptions import (OperationNotFound,
                                                       PathNotFound)
 from openapi_core.validation.exceptions import InvalidSecurity
@@ -22,8 +23,9 @@ ERRORS = {
     EmptyParameterValue: "EMPTY_PARAMETER",
 }
 
-IGNORE_PATHS = ('/', '/api')
-IGNORE_EXTENSIONS = (".yaml", ".png", ".js", ".css", ".map", ".stl", ".dat")
+IGNORE_PATHS = ('/', '/api', '/licence')
+IGNORE_EXTENSIONS = (".yaml", ".png", ".js", ".css", ".map", ".stl", ".dat",
+                     ".ico")
 
 
 def error_to_struct(error):
@@ -72,6 +74,9 @@ def after_request(req, res):
             # openapi_core expects
             #  mimetype='application/json' but gets
             #  mimetype='application/json; charset=utf-8'
+            continue
+        if isinstance(error, MissingResponseContent):
+            # GeneratorResponse
             continue
         log.error("API output error: %s", str(error))
     return res

@@ -44,3 +44,7 @@ redoc {
   margin-right: auto;
   margin-left: auto;
 }
+
+blockquote {
+  padding: 1em;
+}

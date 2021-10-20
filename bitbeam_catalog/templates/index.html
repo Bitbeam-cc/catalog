@@ -6,6 +6,11 @@
         <div class="col-2 sidenav">
           <nav class="nav flex-column nav-pills" prop="categories">
           </nav>
+          <nav class="nav flex-column nav-pills" prop="links">
+            Download
+            <a class="nav-link" href="">STL files</a>
+            <a class="nav-link" href="">LDraw files</a>
+          </nav>
         </div>
 
         <div class="col">
@@ -23,17 +28,18 @@
       <div id="part_page" style="display:none;">
         <h2></h2>
         <div class="row">
-            <div class="col"><img></div>
-            <div class="col-3">
-                <h4>Categories:</h4>
-                <ul class="list-groups"></ul>
-                <h4>Files:</h4>
-                <ul class="list-groups">
-                  <li class="list-group-item"><a type="stl">STL</a></li>
-                  <li class="list-group-item"><a type="dat">LDraw</a></li>
-                </ul>
-            </div>
+          <div class="col"><img></div>
+          <div class="col-3">
+            <h4>Categories:</h4>
+            <ul class="list-groups"></ul>
+            <h4>Files:</h4>
+            <ul class="list-groups">
+              <li class="list-group-item"><a type="stl">STL</a></li>
+              <li class="list-group-item"><a type="dat">LDraw</a></li>
+            </ul>
+          </div>
         </div>
+          File name: <b prop="file"></b>
         <p></p>
       </div>
 
@@ -50,7 +56,7 @@
           <li>Start of <a href="https://bitbeam.org/">Bitbeam</a> construction
           kit.</li>
           <li>Many <a href="http://www.tfsoft.cz/m-bitbeam/index_en.html">
-            materials</a>about m-Bitbeam project, and some parts, which are
+            materials</a> about m-Bitbeam project, and some parts, which are
             still not in this catalog for now.</li>
           <li>Projects on
             <a href="https://www.prusaprinters.org/search/all?q=bitbeam">
@@ -93,21 +99,6 @@
           </form>
           </p>
       </div>{# /about page #}
-
-      <div id="download_page" style="display:none;">
-        <h2>Download</h2>
-        <ul>
-          <li>Generated <a href="">stl</a> files for 3D printing.</li>
-          <li>Generated <a href="">dat</a> files for LDraw.</li>
-        </ul>
-
-        <h3>Authors</h3>
-        <p><i>TODO</i></p>
-
-        <h3>Licence</h3>
-        <p><i>TODO</i></p>
-
-      </div>
 
       <div class="footer">{# creating space for real footer #}</div>
     </div>{# /container #}

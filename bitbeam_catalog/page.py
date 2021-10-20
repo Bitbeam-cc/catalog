@@ -6,7 +6,7 @@ from poorwsgi.response import FileResponse, JSONResponse, Response
 
 from .lib.config import LOGGER as log
 from .lib.core import app
-from .lib.view import generate_page
+from .lib.view import generate_page, markdown2html
 
 
 @app.http_state(state.HTTP_INTERNAL_SERVER_ERROR)
@@ -60,6 +60,14 @@ def documentation(req):
     """Static redoc html documentation."""
     assert req
     return Response(generate_page("redoc.html"))
+
+
+@app.route('/licence')
+def licence(req):
+    """Licence html from markdown."""
+    assert req
+    source = app.cfg.static_files + "/LICENSE.md"
+    return Response(generate_page("licence.html", body=markdown2html(source)))
 
 
 @app.route('/openapi.yaml')

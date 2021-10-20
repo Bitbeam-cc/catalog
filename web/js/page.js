@@ -3,7 +3,6 @@ Page = function(){
 
     this.link_catalog = document.querySelector("a[page=catalog].nav-link");
     this.link_about = document.querySelector("a[page=about]");
-    this.link_download = document.querySelector("a[page=download]");
 
     this.catalog = new Catalog();
     this.part = new Part();
@@ -64,22 +63,11 @@ Page.prototype.switch_about = function() {
     this.link_about.classList.add('active');
 }
 
-Page.prototype.switch_download = function() {
-    if (this.active && this.active.id == "download_page"){
-        return;
-    }
-
-    this.hide();
-    this.show("#download_page");
-    this.link_download.classList.add('active');
-}
 
 Page.prototype.parse_hash = function() {
     let page_url = document.location.hash.split('=')[0];
     if (page_url == "#about"){
         this.switch_about();
-    } else if (page_url == "#download"){
-        this.switch_download();
     } else if (page_url == "#part"){
         this.switch_part();
     } else {
@@ -92,8 +80,6 @@ Page.prototype.on_loaded = function(event) {
         'click', this.switch_catalog.bind(this));
     this.link_about.addEventListener(
         'click', this.switch_about.bind(this));
-    this.link_download.addEventListener(
-        'click', this.switch_download.bind(this));
     this.parse_hash();
 }
 

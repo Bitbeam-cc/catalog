@@ -1,6 +1,8 @@
+docutils-tinyhtmlwriter
 extendparser
-simplejson
+Jinja2
+m2r
 openapi-core==0.13.8
 PoorWSGI
+simplejson
 uWSGI
-Jinja2

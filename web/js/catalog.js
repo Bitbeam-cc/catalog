@@ -42,7 +42,7 @@ Catalog.prototype.init = function() {
 
     ajax_get("/api/categories", this.on_update_categories.bind(this));
     ajax_get("/api/parts?"+this.pager_url(params.offset | 0),
-       this.on_load_part.bind(this));
+       this.on_load_parts.bind(this));
 }
 
 Catalog.prototype.update = function() {

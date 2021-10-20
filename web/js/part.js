@@ -1,5 +1,6 @@
 Part = function() {
     this.title = document.querySelector('#part_page h2');
+    this.file = document.querySelector('#part_page b[prop=file]');
     this.img = document.querySelector('#part_page img');
     this.link_stl = document.querySelector('#part_page a[type=stl]');
     this.link_dat = document.querySelector('#part_page a[type=dat]');
@@ -19,6 +20,7 @@ Part.prototype.on_part_load = function(xhr) {
     let data = JSON.parse(xhr.responseText);
     console.log(data);
     this.title.innerText = data['name'];
+    this.file.innerText = data['file'];
     this.img.setAttribute('src', '/png/'+data['file']+'.png');
     this.link_stl.setAttribute('href', '/stl/'+data['file']+'.stl');
     this.link_dat.setAttribute('href', '/parts/'+data['file']+'.dat');
