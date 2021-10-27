@@ -1,0 +1,32 @@
+# vim: ft=dockerfile
+FROM python:3.9-bullseye
+
+# instalace behovych a cast testovych zavislosti
+RUN \
+    apt-get update && \
+    apt-get install --yes --no-install-recommends \
+        curl \
+        vim \
+        sudo
+
+ARG USER
+
+RUN mkdir -p \
+        /etc/m-bitbeam-catalog && \
+    chown ${USER}.www-data \
+        /etc/m-bitbeam-catalog && \
+    echo "#${USER} ALL=(ALL) ALL" > /etc/sudoers.d/docker-owner
+
+ARG PKG_DIR
+
+COPY requirements.txt /tmp/
+COPY "${PKG_DIR}"/*.whl /tmp/
+
+RUN pip3 install --find-links=file:///tmp -r /tmp/requirements.txt
+RUN pip3 install --find-links=file:///tmp \
+        pytest mock-import pytest-pep8 pytest-doctestplus pytest-pylint
+
+COPY etc/uwsgi.ini /etc/m-bitbeam-catalog
+COPY etc/application.ini /etc/m-bitbeam-catalog
+
+EXPOSE 8000
