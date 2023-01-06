@@ -3,6 +3,7 @@ extendparser
 Jinja2
 m2r
 openapi-core==0.13.8
+openapi-schema-validator==0.1.5
 PoorWSGI
 simplejson
 uWSGI

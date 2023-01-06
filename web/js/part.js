@@ -18,7 +18,7 @@ Part.prototype.on_part_load = function(xhr) {
     }
 
     let data = JSON.parse(xhr.responseText);
-    console.log(data);
+    //console.log(data);
     this.title.innerText = data['name'];
     this.file.innerText = data['file'];
     this.img.setAttribute('src', '/png/'+data['file']+'.png');

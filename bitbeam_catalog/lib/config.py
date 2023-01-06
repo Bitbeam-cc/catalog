@@ -53,6 +53,7 @@ class Config(ExtendParser):
                                                  target=bool,
                                                  fallback=False)
         spec = create_spec(read_yaml_file(join(self.static_files, OPEN_API)))
+        self.api_version = spec.info.version
         self.request_validator = RequestValidator(spec)
         self.response_validator = ResponseValidator(spec)
 

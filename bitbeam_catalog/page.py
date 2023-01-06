@@ -62,6 +62,14 @@ def documentation(req):
     return Response(generate_page("redoc.html"))
 
 
+@app.route('/api/version')
+def version(req):
+    """Return API and library version."""
+    assert req
+    kwargs = {'API': app.cfg.api_version, 'm-bitbeam': app.cfg.db_version}
+    return JSONResponse(**kwargs)
+
+
 @app.route('/licence')
 def licence(req):
     """Licence html from markdown."""

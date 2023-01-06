@@ -6,6 +6,7 @@ Page = function(){
 
     this.catalog = new Catalog();
     this.part = new Part();
+    this.about = new About();
 
     document.addEventListener("DOMContentLoaded", this.on_loaded.bind(this));
     window.addEventListener('hashchange', function() {
@@ -61,6 +62,7 @@ Page.prototype.switch_about = function() {
     this.hide();
     this.show("#about_page");
     this.link_about.classList.add('active');
+    this.about.load();
 }
 
 
