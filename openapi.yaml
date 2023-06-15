@@ -35,6 +35,9 @@ paths:
               schema:
                 type: object
                 properties:
+                  all:
+                    type: integer
+                    description: "Total parts count"
                   categories:
                     $ref: "#/components/schemas/categories"
   /api/parts:

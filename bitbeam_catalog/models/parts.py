@@ -7,6 +7,16 @@ from ..lib.core import app
 
 class Part(dict):
     """Parts model definition."""
+
+    @staticmethod
+    def count():
+        """Return total count of all parts"""
+        with connect(app.cfg.db_uri) as con:
+            con.set_trace_callback(log.info)
+            cur = con.cursor()
+            cur.execute("SELECT count(*) FROM parts")
+            return cur.fetchone()[0]
+
     @staticmethod
     def list(pager, category=None):
         """Return list of parts."""

@@ -105,12 +105,18 @@ Catalog.prototype.on_update_categories = function(xhr) {
         elm.classList.add("active");
     }
 
+    let data = JSON.parse(xhr.responseText);
+
     elm.setAttribute("href", "#");
     elm.setAttribute("category", "All");
     elm.innerText = "All";
+    qu = document.createElement("span");
+    qu.setAttribute("class", "float-right");
+    qu.innerText = data["all"].toString();
+    elm.appendChild(qu);
+
     this.categories.appendChild(elm);
 
-    let data = JSON.parse(xhr.responseText);
     data["categories"].forEach(function(it) {
         elm = document.createElement("a");
         elm.setAttribute("class", "nav-link");
