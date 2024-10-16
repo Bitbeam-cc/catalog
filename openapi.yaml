@@ -1,8 +1,8 @@
 ---
 openapi: 3.0.0
 info:
-  title: m-bitbeam-catalog
-  version: "1.0.1"
+  title: BitBeam Catalog
+  version: "1.0.2"
 paths:
   /api/version:
     get:
@@ -18,12 +18,12 @@ paths:
                   API:
                     type: string
                     example: "1.0"
-                  m-bitbeam:
+                  bitbeam:
                     type: string
                     example: "1.0"
                 required:
                   - API
-                  - m-bitbeam
+                  - bitbeam
   /api/categories:
     get:
       summary: "Get list of categories"

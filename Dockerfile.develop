@@ -12,9 +12,9 @@ RUN \
 ARG USER
 
 RUN mkdir -p \
-        /etc/m-bitbeam-catalog && \
+        /etc/bitbeam-catalog && \
     chown ${USER}.www-data \
-        /etc/m-bitbeam-catalog && \
+        /etc/bitbeam-catalog && \
     echo "#${USER} ALL=(ALL) ALL" > /etc/sudoers.d/docker-owner
 
 ARG PKG_DIR
@@ -26,7 +26,7 @@ RUN pip3 install --find-links=file:///tmp -r /tmp/requirements.txt
 RUN pip3 install --find-links=file:///tmp \
         pytest mock-import pytest-pep8 pytest-doctestplus pytest-pylint
 
-COPY etc/uwsgi.ini /etc/m-bitbeam-catalog
-COPY etc/application.ini /etc/m-bitbeam-catalog
+COPY etc/uwsgi.ini /etc/bitbeam-catalog
+COPY etc/application.ini /etc/bitbeam-catalog
 
 EXPOSE 8000

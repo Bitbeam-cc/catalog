@@ -8,7 +8,7 @@ TEST_API_URL    ?= http://localhost:8000
 
 PKG_TARGET_DIR ?= pkgs
 
-COMPONENT = m-bitbeam-catalog
+COMPONENT = bitbeam-catalog
 TEST_REMOTE_COMPONENT = $(COMPONENT)-test
 SOURCES = \
 	$(shell find ./bitbeam_catalog) \
@@ -48,7 +48,7 @@ stamp/requirements.stamp: requirements.txt
 	mkdir -p stamp
 	touch $@
 
-# pytest -v --pylint --pep8 --doctest-plus --doctest-rst m-bitbeam-catalog
+# pytest -v --pylint --pep8 --doctest-plus --doctest-rst bitbeam-catalog
 stamp/package.stamp: $(SOURCES) stamp/requirements.stamp
 	docker run $(DOCKER_RUN_PARAMS) $(DOCKER_IMAGE_BUILDER) \
 		bash -c "pip3 install --find-links=file://$(CURDIR)/$(PKG_TARGET_DIR) -r requirements.txt && \

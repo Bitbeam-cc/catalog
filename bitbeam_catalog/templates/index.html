@@ -8,8 +8,8 @@
           </nav>
           <nav class="nav flex-column nav-pills" prop="links">
             Download
-            <a class="nav-link" href="">STL files</a>
-            <a class="nav-link" href="">LDraw files</a>
+            <a class="nav-link" href="/data/m-bitbeam-catalog-{{ version }}.zip">STL files</a>
+            <a class="nav-link" href="/data/m-bitbeam-parts-{{ version }}.zip">LDraw files</a>
           </nav>
         </div>
 
@@ -43,57 +43,16 @@
         <p></p>
       </div>
 
-      <div id="about_page" style="display:none;">
-        <h2>About</h2>
-
-        <p>This is on-line catalog for
-          <a href="https://github.com/m-Bitbeam/m-bitbeam">m-bitbeam</a>
-          library <span prop="version"></span>.
-        </p>
-
-        <h3>Links</h3>
-        <ul>
-          <li>Start of <a href="https://bitbeam.org/">Bitbeam</a> construction
-          kit.</li>
-          <li>Many <a href="http://www.tfsoft.cz/m-bitbeam/index_en.html">
-            materials</a> about m-Bitbeam project, and some parts, which are
-            still not in this catalog for now.</li>
-          <li>Construction set <a href="https://www.e-mole.cz/diy/m-bitbeam">
-              presentation</a> in Czech language.</li>
-          <li><a href="https://hackaday.io/project/158815-m-bitbeam-construction-set">
-              Hackday</a> project page.</li>
-          <li>Projects on
-            <a href="https://www.prusaprinters.org/search/all?q=bitbeam">
-              PrusaPrinters</a> catalog.</li>
-          <li>Projects on
-            <a href="https://www.thingiverse.com/tag:bitbeam">Thingiverse</a>
-            catalog.</li>
-        </ul>
-
-        <b>Sources:</b>
-        <ul>
-          <li>This <a href="https://github.com/m-Bitbeam/m-bitbeam-catalog">web</a>
-            page repository.</li>
-          <li>m-Bitbeam
-            <a href="https://github.com/m-Bitbeam/m-bitbeam-catalog">parts</a>
-            repository.</li>
-          <li><a href="https://github.com/m-Bitbeam/m-bitbeam-models">Models</a>
-            repository.</li>
-          <li>OpenSCAD<a href="https://github.com/ondratu/bitbeam-lib">library</a>
-            for crating your own parts.</li>
-        </ul>
-
-        <h3>Contact</h3>
-        <ul>
-          <li>Issues on <a href="https://github.com/m-Bitbeam/m-bitbeam/issues">
-            GitHub.com</a></li>
-          <li>Email: <b>mcbig</b> at <b>zeropage</b> dot <b>cz</b></li>
-          <li>Twitter: @mcbig_cz</li>
-        </ul>
-
-        <h3>Donation</h3>
-        <p>If you like this project, and you want to donate it, please do it
-          by this button
+      <div class="footer">{# creating space for real footer #}</div>
+    </div>{# /container #}
+    <div class="container footer">
+      <center><small>
+          Licence: <a
+            href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.cs">CC BY-NC-SA 4.0</a>
+          &nbsp;
+          <a href="https://www.instagram.com/bitbeam_cc/" title="Instagram">
+            <img class="social" src="/img/instagram-brands-solid.svg"></a>
+          &copy; 2024 Ondřej Tůma.
           <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
             <input type="hidden" name="cmd" value="_donations" />
             <input type="hidden" name="business" value="mcbig@zeropage.cz" />
@@ -101,13 +60,7 @@
             <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
             <img alt="" border="0" src="https://www.paypal.com/en_CZ/i/scr/pixel.gif" width="1" height="1" />
           </form>
-          </p>
-      </div>{# /about page #}
-
-      <div class="footer">{# creating space for real footer #}</div>
-    </div>{# /container #}
-    <div class="container footer">
-        <center><small></i>Create by Ondřej Tůma 2021.</i></small></center>
+        </small></center>
     </div>
 
     <script src="/js/jquery-3.4.1.min.js"></script>
@@ -116,7 +69,6 @@
     <script src="/js/index.js"></script>
     <script src="/js/catalog.js"></script>
     <script src="/js/part.js"></script>
-    <script src="/js/about.js"></script>
     <script src="/js/page.js"></script>
   </body>
 </html>

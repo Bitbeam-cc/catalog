@@ -15,7 +15,7 @@ from uwsgidecorators import timer
 
 from .lib.core import app
 
-URL = "https://api.github.com/repos/m-Bitbeam/m-bitbeam/releases/latest"
+URL = "https://api.github.com/repos/Bitbeam-cc/bitbeam/releases/latest"
 log = logging.getLogger(__name__)
 
 
@@ -30,7 +30,7 @@ def parts(req):
 
 
 def download(tag, name, url):
-    """Process download new m-bitbeam release."""
+    """Process download new bitbeam release."""
     log.info("Download %s", url)
     with urlopen(url) as res:
         zip_path = app.cfg.static_files + "/data/" + name
@@ -74,12 +74,14 @@ def check_update(num):
                     download(tag, name, asset["browser_download_url"])
                 elif name.startswith("m-bitbeam-stl"):
                     download(tag, name, asset["browser_download_url"])
+                elif name.startswith("m-bitbeam-parts"):
+                    download(tag, name, asset["browser_download_url"])
                 else:
                     log.debug("skip %s", name)
 
             log.info("Creating symlinks")
             data_path = app.cfg.static_files + "/data"
-            for obj in ("stl", "png", "catalog.db"):
+            for obj in ("stl", "png", "parts", "catalog.db"):
                 if lexists(f"{data_path}/{obj}"):
                     unlink(f"{data_path}/{obj}")
                 symlink(f"{tag}/{obj}", f"{data_path}/{obj}")

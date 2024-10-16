@@ -45,7 +45,7 @@ def fatal_error(req):
 def root(req):
     """Static root html file."""
     assert req
-    return Response(generate_page("index.html"))
+    return Response(generate_page("index.html", version=app.cfg.db_version))
 
 
 @app.route('/api', state.METHOD_HEAD)
@@ -66,16 +66,8 @@ def documentation(req):
 def version(req):
     """Return API and library version."""
     assert req
-    kwargs = {'API': app.cfg.api_version, 'm-bitbeam': app.cfg.db_version}
+    kwargs = {'API': app.cfg.api_version, 'bitbeam': app.cfg.db_version}
     return JSONResponse(**kwargs)
-
-
-@app.route('/licence')
-def licence(req):
-    """Licence html from markdown."""
-    assert req
-    source = app.cfg.static_files + "/LICENSE.md"
-    return Response(generate_page("licence.html", body=markdown2html(source)))
 
 
 @app.route('/openapi.yaml')

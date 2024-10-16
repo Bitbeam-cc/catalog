@@ -17,6 +17,11 @@ body {
 .footer {
   height: 60px;
 }
+.footer .social {
+  height: 32px;
+  vertical-align: middle;
+  padding-right: 8px;
+}
 
 .sidenav {
   min-width: 130px;

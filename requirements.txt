@@ -4,6 +4,7 @@ Jinja2
 m2r
 openapi-core==0.13.8
 openapi-schema-validator==0.1.5
-PoorWSGI
+openapi-spec-validator==0.3.1
+PoorWSGI==2.4.0
 simplejson
 uWSGI
