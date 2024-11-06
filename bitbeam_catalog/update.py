@@ -70,11 +70,11 @@ def check_update(num):
 
             for asset in data["assets"]:
                 name = asset["name"]
-                if name.startswith("m-bitbeam-catalog"):
+                if name.startswith("bitbeam-catalog"):
                     download(tag, name, asset["browser_download_url"])
-                elif name.startswith("m-bitbeam-stl"):
+                elif name.startswith("bitbeam-stl"):
                     download(tag, name, asset["browser_download_url"])
-                elif name.startswith("m-bitbeam-parts"):
+                elif name.startswith("bitbeam-parts"):
                     download(tag, name, asset["browser_download_url"])
                 else:
                     log.debug("skip %s", name)

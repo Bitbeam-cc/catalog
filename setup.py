@@ -1,4 +1,4 @@
-"""m-Bitbeam online catalog project."""
+"""BitBeam online catalog project."""
 from distutils.errors import DistutilsError
 from os import walk
 
@@ -61,14 +61,14 @@ def doc():
 
 
 setup(
-    name="m-Bitbeam Catalog",
+    name="Bitbeam Catalog",
     version=__version__,
-    description="On-line catalog for m-bitbeam repository",
+    description="On-line catalog for bitbeam repository",
     author="Ondřej Tůma",
     author_email="mcbig@zeropage.cz",
     maintainer="Ondrej Tuma",
     maintainer_email="mcbig@zeropage.cz",
-    url="https://m-bitbeam.geekzoo.cz",
+    url="https://catalog.bitbeam.cc",
     packages=['bitbeam_catalog'],
     include_package_data=True,
     data_files=[('share/doc/bitbeam_catalog', [
